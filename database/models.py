@@ -12,18 +12,8 @@ class User(Base):
     name = Column(String)
     is_active = Column(Boolean, default=True)
 
-    items = relationship("Item", back_populates="owner")
     
 
-class Item(Base):
-    __tablename__ = "items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    owner = relationship("User", back_populates="items")
 
 class Participant(Base):
     __tablename__ = "participants"
@@ -46,7 +36,8 @@ class Group(Base):
     page_id = Column(String, unique=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
-    Participants = relationship("Participant", back_populates="groups", uselist= True)
+
+    participants = relationship("Participant", uselist= True)
     
 # class User(BaseModel):
 #     nickname = str

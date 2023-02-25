@@ -22,6 +22,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def get_group_by_page_id(db: Session, page_id:str):
+    return db.query(models.Group).filter(models.Group.page_id == page_id).first()
+
+def create_group(db: Session, group: schemas.GroupCreate):
+    db_group = models.Group(page_id=group.page_id,title=group.title)
+    db.add(db_group)
+    db.commit()
+    db.refresh(db_group)
+    return db_group
 
 # def get_items(db: Session, skip: int = 0, limit: int = 100):
 #     return db.query(models.Item).offset(skip).limit(limit).all()
